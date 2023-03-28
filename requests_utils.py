@@ -14,7 +14,8 @@ def make_request(url):
         response = requests.get(url)
         response.raise_for_status()  # Raises an HTTPError if the status code indicates an error
         return response.content, response.status_code
-    except requests.exceptions.RequestException as e:
+    except requests.exceptions.HTTPError as http_error:
         # Log the error and re-raise the exception
-        logging.error(f'Error making request to {url}: {e}')
-        raise
+        logging.error(f"HTTP error occurred: {http_error}")
+    except requests.exceptions.RequestException as error:
+        logging.exception(f"An error occurred: {error}")
