@@ -1,23 +1,23 @@
-import logging
+from logging_utils import log_message
 import requests
+import logging
 
-def make_request(url, timezone='America/Mexico_City'):
+def make_request(url, headers={}):
     """Sends a HTTP GET request to the specified URL.
 
     Args:
         url (str): The URL to send the request to.
 
     Returns:
-        tuple: A tuple containing the response content and status code.
+        str: The response text
     """
     try:
-        headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36',
-                 'TimeZone': timezone}
-        response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()  # Raises an HTTPError if the status code indicates an error
-        return response.content, response.status_code
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        if response.status_code == 200:
+            log_message('app.log', logging.INFO, f"Succeful requests to: {url} Status code: {response.status_code}")
+            return response.text
     except requests.exceptions.HTTPError as http_error:
-        # Log the error and re-raise the exception
-        logging.error(f"HTTP error occurred: {http_error}")
+        log_message('app.log', logging.ERROR, f"HTTP error occurred: {http_error}")
     except requests.exceptions.RequestException as error:
-        logging.exception(f"An error occurred: {error}")
+        log_message('app.log', logging.ERROR, f"An error occurred: {error}")

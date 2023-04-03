@@ -1,22 +1,29 @@
 import logging
 
-def configure_logging(log_file, log_level=logging.DEBUG):
-    """Configures logging to write log messages to a file.
+def log_message(log_file, log_level, log_message):
+    # Create a logger with the specified log file name
+    logger = logging.getLogger(log_file)
+    logger.setLevel(log_level)
 
-    Args:
-        log_file (str): Path to the log file.
-        log_level (int, optional): Level of log messages to write. Defaults to logging.DEBUG.
-    """
-    # Configure logging
-    logging.basicConfig(filename=log_file, level=log_level)
-
-    # Create a formatter for log messages
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-    # Create a handler to send log messages to the file
+    # Create a file handler to write log messages to the specified log file
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(log_level)
+
+    # Create a log message formatter
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)
 
-    # Add the handler to the logger
-    logging.getLogger('').addHandler(file_handler)
+    # Add the file handler to the logger
+    logger.addHandler(file_handler)
+
+    # Log the specified message at the specified level
+    if log_level == logging.DEBUG:
+        logger.debug(log_message)
+    elif log_level == logging.INFO:
+        logger.info(log_message)
+    elif log_level == logging.WARNING:
+        logger.warning(log_message)
+    elif log_level == logging.ERROR:
+        logger.error(log_message)
+    elif log_level == logging.CRITICAL:
+        logger.critical(log_message)
