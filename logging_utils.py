@@ -17,13 +17,13 @@ def log_message(log_file, log_level, log_message):
     logger.addHandler(file_handler)
 
     # Log the specified message at the specified level
-    if log_level == logging.DEBUG:
+    if log_level == 'DEBUG':
         logger.debug(log_message)
-    elif log_level == logging.INFO:
+    elif log_level == 'INFO':
         logger.info(log_message)
-    elif log_level == logging.WARNING:
+    elif log_level == 'WARNING':
         logger.warning(log_message)
-    elif log_level == logging.ERROR:
+    elif log_level == 'ERROR':
         logger.error(log_message)
-    elif log_level == logging.CRITICAL:
+    elif log_level == 'CRITICAL':
         logger.critical(log_message)
