@@ -1,4 +1,5 @@
-from beautifulsoup_utils import get_matches_from_futbolenvivo
+from beautifulsoup_utils import get_matches_from_livesoccertv
+from utils import COMPETITIONS_SOCCERLIVETV
 
-url = 'https://www.futbolenvivomexico.com/competicion/liga-mexico'
-print(get_matches_from_futbolenvivo(url, 'Liga MX'))
+liga_mx = get_matches_from_livesoccertv(COMPETITIONS_SOCCERLIVETV['Liga MX']['url'])
+print(liga_mx)

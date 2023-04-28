@@ -1,18 +1,10 @@
 from requests_utils import make_request
 from logging_utils import log_message
+from utils import get_current_date
 from bs4 import BeautifulSoup
-from datetime import datetime
-import re
 
-def get_current_date(format):
-    # Get the current datetime object
-    now = datetime.datetime.now()
-    
-    # Format the datetime object to a string with the given format
-    date_str = now.strftime(format)
-    
-    # Return the formatted date string
-    return date_str
+URL_BASE = 'https://www.livesoccertv.com/'
+
 
 def parse_html(html, parser='lxml'):
     # Create a BeautifulSoup object from the HTML string using the specified parser
@@ -21,60 +13,56 @@ def parse_html(html, parser='lxml'):
     # Return the BeautifulSoup object
     return soup
 
-def get_matches_from_futbolenvivo(url, competition):
-    content = make_request(url)
+
+def get_matches_from_livesoccertv(url_competition, language=''):
+    
+    url = URL_BASE + language + url_competition
+    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
+    
+    # Find date according to language
+    if language != '':
+        schedule = get_current_date(language)
+        if schedule is None:
+            log_message('app.log', 'ERROR', f"Language: {language} isn't available")
+            return []
+    else:
+        schedule = get_current_date()
+
+    # Start scraping
+    content = make_request(url, headers=header)
     soup = parse_html(content, parser='html.parser')
     log_message('app.log', 'INFO', "Start Scraping")
 
-    table_matches = None
-    current_date = datetime.now().date()
-    #current_date = datetime(2023, 4, 8).date()
-    matches = []
+    # Find main table
+    main_table = soup.find('div', class_='tab_container')
+    schedules_table = main_table.find('table', class_='schedules')
 
-    # Regular expression to detect date in any format
-    date_regex = re.compile(r"\d{1,2}[/\.-]\d{1,2}[/\.-]\d{4}")
-
-    for table in soup.find_all('table', class_='tablaPrincipal detalleVacio'):
-        # Search for date in any format within table text
-        match = date_regex.search(table.text)
-        if match:
-            date_table = datetime.strptime(match.group(), '%d/%m/%Y').date()
-            if current_date == date_table:
-                table_matches = table
-                break
+    # Find matches by today date
+    list_matches = []
+    for matches_and_schedules in schedules_table:
+        if schedule in matches_and_schedules.get_text():
+            next_livecomp = matches_and_schedules.find_next('tr', class_='livecomp')
+            next_element = matches_and_schedules.find_next('tr', class_='matchrow')
+            while next_element and next_element != next_livecomp:
+                if next_element.has_attr('id') and next_element.find('a'):
+                    dict_match =  {
+                        'id': next_element['id'],
+                        'date': schedule,
+                        'title': next_element.find('a')['title'],
+                        'link': URL_BASE[:28] + next_element.find('a')['href']
+                    }
+                    list_matches.append(dict_match)
+                next_element = next_element.find_next('tr')
     
-    # If the table of the matches of the day was not found, return message
-    if not table_matches:
-        msg = f"No game today in the: {competition}"
-        log_message('app.log', 'INFO', msg)
-        return msg
-    
-    # Find all items that contain the match time
-    match_schedules = table_matches.find_all('td', class_='hora')
-
-    # Find the home teams, away teams and channels for each match
-    for schedule in match_schedules:
-        # Find the td element that contains the local machine
-        local = schedule.find_next('td', class_='local')
-
-        # Find the td element containing the away team
-        visit = local.find_next('td', class_='visitante')
-
-        # Find the ul element containing the channel list
-        channels = schedule.find_next('ul', class_='listaCanales')
-        if channels:
-            list_channels = [canal.text.strip() for canal in channels.find_all('li')]
-
-        # Store the data in a dictionary
-        match = {
-            'competition': competition,
-            'time_utc-6':schedule.text.strip(),
-            'local': local.text.strip(),
-            'visita': visit.text.strip(),
-            'chanels': list_channels if channels else None
-        }
-
-        matches.append(match)
-
     log_message('app.log', 'INFO', "Finish Scraping Successfully")
-    return matches
+                
+    if len(list_matches) > 0:
+        msg = f"Games today: {str(len(list_matches))}"
+        print(msg)
+        log_message('app.log', 'INFO', msg)
+        return list_matches
+    else:
+        msg = f"No games today in the: {url_competition}"
+        print(msg)
+        log_message('app.log', 'INFO', msg)
+        return []
