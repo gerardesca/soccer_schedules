@@ -232,3 +232,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# keys twitter
+keys.py
