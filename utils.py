@@ -1,59 +1,27 @@
-from datetime import datetime
+from datetime import datetime, timedelta
+from dateutil.parser import parse
 
-COMPETITIONS_SOCCERLIVETV = {
-    'Liga MX':{
-        'country':'Mexico',
-        'url':'competitions/mexico/primera-division/'
-    },
-    'La Liga':{
-        'country':'Spain',
-        'url':'competitions/spain/primera-division/'
-    },
-    'Premier League':{
-        'country':'England',
-        'url':'competitions/england/premier-league/'
-    }
-}
 
-MONTHS_BY_LANGUAGE = [
-                        {'es':'Enero'},
-                        {'es':'Febrero'},
-                        {'es':'Marzo'},
-                        {'es':'Abril'},
-                        {'es':'Mayo'},
-                        {'es':'Junio'},
-                        {'es':'Julio'},
-                        {'es':'Agosto'},
-                        {'es':'Septiembre'},
-                        {'es':'Octubre'},
-                        {'es':'Noviembre'},
-                        {'es':'Diciembre'}
-                    ]
-
-def get_current_date(language=''):
+def get_current_date_by_format(format='%Y-%m-%d'):
     """ 
-        Returns the date according to the chosen language, by default English
-        Format: 23 April 2023
+        Returns the date according to format.
+        Default: 2023-05-03 (year, month, day)
     """
     
     # Get the current datetime object
     now = datetime.now()
     
     # Format the datetime object to a string with the given format
-    date_str = now.strftime('%d %B %Y')
-    
-    language = language.replace('/', '')
-    
-    if language != '':
-        for month in MONTHS_BY_LANGUAGE:
-            if language in month:
-                day = now.strftime('%d')
-                month = MONTHS_BY_LANGUAGE[int(now.strftime('%-m'))-1][language]
-                year = now.strftime('%Y')
-                date_str = day +' '+ month +' '+ year
-                return date_str
-            else:
-                return None
+    date_str = now.strftime(format)
     
     # Return the formatted date string
     return date_str
+
+
+def convert_time(time, hours, format='%I:%M%p'):
+    """ 
+        Returns the time according to the given difference hours and the format
+    """
+    hora_datetime = parse(time)
+    dt_result = hora_datetime + timedelta(hours=hours)
+    return dt_result.strftime(format)

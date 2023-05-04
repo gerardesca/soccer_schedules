@@ -1,10 +1,11 @@
-from utils import COMPETITIONS_SOCCERLIVETV
 from requests_utils import make_request
 from logging_utils import log_message
-from utils import get_current_date
+from utils import convert_time, get_current_date_by_format
 from bs4 import BeautifulSoup
+import time
 
 URL_BASE = 'https://www.livesoccertv.com/'
+HEADER = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
 
 
 def parse_html(html, parser='lxml'):
@@ -15,89 +16,107 @@ def parse_html(html, parser='lxml'):
     return soup
 
 
-def get_matches_from_livesoccertv(url_competition, language=''):
+def get_broadcasts_by_match(url: str, list_countries_broadcast: list) -> list:
+    """
+    Return a list with broadcasts filtered by list_countries_broadcasts
+    If match dont have any broadcast by list_countries_broadcasts, Return a empty list
+    """
     
-    url = URL_BASE + language + url_competition
-    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
-    
-    # Find date according to language
-    if language != '':
-        schedule = get_current_date(language)
-        if schedule is None:
-            log_message('app.log', 'ERROR', f"Language: {language} isn't available")
-            return []
-    else:
-        schedule = get_current_date()
-
-    # Start scraping
-    content = make_request(url, headers=header)
+    content = make_request(url, headers=HEADER)
     soup = parse_html(content, parser='html.parser')
-    log_message('app.log', 'INFO', "Start Scraping")
-
-    # Find main table
-    main_table = soup.find('div', class_='tab_container')
-    schedules_table = main_table.find('table', class_='schedules')
-
-    # Find matches by today date
-    list_matches = []
-    for matches_and_schedules in schedules_table:
-        if schedule in matches_and_schedules.get_text():
-            next_livecomp = matches_and_schedules.find_next('tr', class_='livecomp')
-            next_element = matches_and_schedules.find_next('tr', class_='matchrow')
-            while next_element and next_element != next_livecomp:
-                if next_element.has_attr('id') and next_element.find('a'):
-                    dict_match =  {
-                        'id': next_element['id'],
-                        'date': schedule,
-                        'title': next_element.find('a')['title'],
-                        'url': URL_BASE[:28] + next_element.find('a')['href']
-                    }
-                    list_matches.append(dict_match)
-                next_element = next_element.find_next('tr')
+    log_message('INFO', f"Start Scraping to: {url}")
     
-    log_message('app.log', 'INFO', "Finish Scraping Successfully")
-                
-    if len(list_matches) > 0:
-        msg = f"Games today: {str(len(list_matches))}"
-        print(msg)
-        log_message('app.log', 'INFO', msg)
-        return list_matches
-    else:
-        msg = f"No games today in the: {url_competition}"
-        print(msg)
-        log_message('app.log', 'INFO', msg)
+    main_table = soup.find('table', attrs={'id':'wc_channels'})
+    
+    try:
+        broadcast_by_country = main_table.find_all('tr')
+        
+        broadcasts = []
+        for broadcast in broadcast_by_country[:len(broadcast_by_country)-1]:
+            country = broadcast.find_next('td').get_text()
+            if country in list_countries_broadcast:
+                tvs = [tv.get_text() for tv in broadcast.find_all('a')]
+                dict = {'country':country,
+                        'channels':tvs}
+                broadcasts.append(dict)
+        
+        return broadcasts
+
+    except:
+        log_message('WARNING', f"There arent broadcast")
         return []
 
 
-def get_broadcast_by_match(match_dict):
+def get_main_matches(list_countries_broadcast: list, date: str = get_current_date_by_format(), language: str = '') -> list:
+    """
+    Return a list with all day main matches from livesoccer
+    """
     
-    url = match_dict['url']
-
-    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
-
-    # Start scraping
-    content = make_request(url, headers=header)
+    # main url
+    url = URL_BASE + language + 'schedules/' + date + '/'
+    
+    # list will be return
+    list_matches_by_competition = []
+    
+    # make request and get soup object
+    content = make_request(url, headers=HEADER)
     soup = parse_html(content, parser='html.parser')
+    log_message('INFO', f"Start Scraping to: {url}")
 
-    main_table = soup.find('div', class_='tab_content')
-    broadcast_by_country = main_table.find_all('tr')
+    # find main table and all rows
+    main_table = soup.find('table', class_='schedules')
+    rows = main_table.find_all('tr')
 
-    broadcasts = []
-    for broadcast in broadcast_by_country[:len(broadcast_by_country)-1]:
-        country = broadcast.find_next('td').get_text()
-        tvs = [tv.get_text() for tv in broadcast.find_all('a')]
-        dict = {'country':country,
-                'channels':tvs}
-        broadcasts.append(dict)
+    count_matches = 0
+    # iterate each row
+    for row in rows:
+        # find row with competition name, create main dictionary and store in list 
+        if row.has_attr('class') and 'sortable_comp' in row['class']:
+            dict_competition = {'competition': row.get_text().strip(),
+                                'matches':[]}
+            list_matches_by_competition.append(dict_competition)
+        # The other rows are matches
+        else:
+            count_matches += 1
+            # find its competition from each match (previus)
+            competition = row.find_previous('tr', class_='sortable_comp').get_text().strip()
+            
+            # find elements by each match
+            match_title = row.find('a').get_text()
+            time_hour = row.find('span', class_='ftime')
+            url = row.find('a')['href']
+            url = URL_BASE + language + url[1:]
+            
+            # create dictionary
+            dict_matches_by_competition = {'title':match_title,
+                                        'date':date,
+                                        'time_utc-4h': 'TBA' if time_hour is None else time_hour.get_text().strip(),
+                                        'time_utc': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4),
+                                        'time_utc-6h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6),
+                                        'url': url,
+                                        'broadcasts': get_broadcasts_by_match(url, list_countries_broadcast)}
+            
+            time.sleep(2)
+            
+            # find competition and store match in its competition
+            for comp in list_matches_by_competition:
+                if comp['competition'] == competition:
+                    comp['matches'].append(dict_matches_by_competition)
     
-    match_dict['broadcasts'] = broadcasts
-    
-    return match_dict
+    log_message('INFO', f"Get {len(list_matches_by_competition)} main competitions and {count_matches} matches in total")
+                    
+    return list_matches_by_competition
 
-def get_list_matches_by_league(league, language=''):
-    
-    macthes = []
-    for match in get_matches_from_livesoccertv(COMPETITIONS_SOCCERLIVETV[league]['url'], language):
-        macthes.append(get_broadcast_by_match(match))
-        
-    return macthes
+
+"""
+def get_list_for_post(post, list_countries_broadcast, language=''):
+    post_dict = {k: v for k, v in COMPETITIONS_SOCCERLIVETV.items() if v['post'] == post}
+    all_matches_list = []
+    for competition in post_dict:
+        matches_by_league = get_list_matches_by_league(league=competition, list_countries_broadcast=list_countries_broadcast, language=language)
+        if matches_by_league != []:
+            matches = {competition:matches_by_league}
+            all_matches_list.append(matches)
+            
+    return all_matches_list
+"""
