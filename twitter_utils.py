@@ -1,3 +1,4 @@
+from logging_utils import log_message
 import tweepy
 import keys
 
@@ -15,4 +16,4 @@ def client():
 def create_tweet_with_media(message: str, media):
     api = client()
     api.update_status_with_media(message, media)
-    print('Tweet')
+    log_message('INFO', "Tweet publicated successfully")

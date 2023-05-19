@@ -2,14 +2,14 @@ from datetime import datetime, timedelta
 from dateutil.parser import parse
 
 
-def get_current_date_by_format(format='%Y-%m-%d'):
+def get_current_date_by_format(format='%Y-%m-%d', days=0):
     """ 
         Returns the date according to format.
         Default: 2023-05-03 (year, month, day)
     """
     
     # Get the current datetime object
-    now = datetime.now()
+    now = datetime.now() + timedelta(days)
     
     # Format the datetime object to a string with the given format
     date_str = now.strftime(format)

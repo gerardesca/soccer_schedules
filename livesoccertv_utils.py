@@ -108,15 +108,18 @@ def get_main_matches(list_countries_broadcast: list, date: str = get_current_dat
     return list_matches_by_competition
 
 
-"""
-def get_list_for_post(post, list_countries_broadcast, language=''):
-    post_dict = {k: v for k, v in COMPETITIONS_SOCCERLIVETV.items() if v['post'] == post}
-    all_matches_list = []
-    for competition in post_dict:
-        matches_by_league = get_list_matches_by_league(league=competition, list_countries_broadcast=list_countries_broadcast, language=language)
-        if matches_by_league != []:
-            matches = {competition:matches_by_league}
-            all_matches_list.append(matches)
-            
-    return all_matches_list
-"""
+def filtered_competitions(all_competitions: list, competitions: list) -> list:
+    """
+    Return a list filtered by competition, the list 'competitions' has the main competitions
+    Return message to matches without broadcasts
+    """
+    filtered = [compe for compe in all_competitions if compe['competition'] in competitions]
+    
+    for compe in filtered:
+        for macthes in compe['matches']:
+            if macthes['broadcasts'] == []:
+                macthes['broadcasts'] = ['Sin transmisión disponible']
+    
+    log_message('INFO', f"List original: {len(all_competitions)} competitions, List filtered: {len(filtered)} competitions")
+    
+    return filtered

@@ -15,7 +15,7 @@ def make_request(url: str, headers: dict = {}):
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         if response.status_code == 200:
-            log_message('INFO', f"Succeful requests to: {url} Status code: {response.status_code}")
+            log_message('INFO', f"Successful requests to: {url} Status code: {response.status_code}")
             return response.text
     except requests.exceptions.HTTPError as http_error:
         log_message('ERROR', f"HTTP error occurred: {http_error}")
