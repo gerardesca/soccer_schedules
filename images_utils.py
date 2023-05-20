@@ -8,9 +8,9 @@ PATH_COMPETITIONS='./images/competitions/'
 size_competition_title = 30
 size_match_title = 20
 size_broadcasts_title = 15
-font_competition = ImageFont.truetype('/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf', size_competition_title)
-font_match = ImageFont.truetype('/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf', size_match_title)
-font_broadcasts_title = ImageFont.truetype('/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf', size_broadcasts_title)
+font_competition = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_competition_title)
+font_match = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_match_title)
+font_broadcasts_title = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_broadcasts_title)
 
 
 def get_width_px_by_text(text: str, font):

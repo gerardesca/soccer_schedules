@@ -6,7 +6,7 @@ from images_utils import create_image_post, delete_image
 
 def run():
     today = get_current_date_by_format()
-    date_post = get_current_date_by_format(days=6)
+    date_post = get_current_date_by_format(days=1)
 
     msg = f"""
     {date_post} | JORNADA FUTBOLERA
@@ -21,9 +21,9 @@ Horarios en CST (Hora Estándar Central)
     # filtered competitions
     filtered = filtered_competitions(all, main_leagues_en)
     # create image
-    image = create_image_post(filtered, name=date_post+'test4')
+    image = create_image_post(filtered, name=date_post)
     # post tweet
-    #create_tweet_with_media(msg, image)
+    create_tweet_with_media(msg, image)
     # delete old image post
     delete_image(f'./images/{today}.png')
     
