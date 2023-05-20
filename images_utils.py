@@ -98,14 +98,15 @@ def count_text_height(content: list, space_between_text: int = 0, margin: int = 
 
 
 def create_image_post(content: list,
-                      name: str = 'test',
+                      name: str = '',
                       margin = 20,
                       x_start=0,
                       y_start=0, 
                       space_between_text = 10, 
                       background = (255,255,255),
-                      color_title = (0,0,0),
-                      color_broadcast = (97,97,97),
+                      color_competition = (0, 0, 0),
+                      color_match = (6, 134, 177),
+                      color_broadcast = (0, 60, 31),
                       color_lines = (0,0,0),
                       width_line = 1):
     
@@ -141,7 +142,7 @@ def create_image_post(content: list,
         compe_image = Image.open(PATH_COMPETITIONS + compe['competition'] + '.png')
         
         # write title competition
-        draw.text((x + compe_image.width + space_between_text, y), competition, fill=color_title, font=font_competition)
+        draw.text((x + compe_image.width + space_between_text, y), competition, fill=color_competition, font=font_competition)
         image.paste(compe_image,(x, y), compe_image.split()[3])
         # get height title competition in px
         y += get_height_px_by_text(competition, font_competition) + space_between_text
@@ -151,7 +152,7 @@ def create_image_post(content: list,
             title = f"{matche['date']} | {matche['title']} | {matche['time_utc-6h']} CST"
             
             # write matches
-            draw.text((x, y), title, fill=color_title, font=font_match)
+            draw.text((x, y), title, fill=color_match, font=font_match)
             # get height title match in px
             y += get_height_px_by_text(title, font_match) + space_between_text
             
