@@ -14,6 +14,9 @@ def client():
 
 
 def create_tweet_with_media(message: str, media):
-    api = client()
-    api.update_status_with_media(message, media)
-    log_message('INFO', "Tweet publicated successfully")
+    if media != None:
+        api = client()
+        api.update_status_with_media(message, media)
+        log_message('INFO', "Tweet publicated successfully")
+    else:
+        log_message('INFO', "Tweet didnt publicated")

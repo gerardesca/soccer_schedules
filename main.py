@@ -5,7 +5,7 @@ from twitter_utils import create_tweet_with_media
 from images_utils import create_image_post, delete_image
 
 def run():
-    today = get_current_date_by_format()
+    today = get_current_date_by_format(days=-7)
     date_post = get_current_date_by_format(days=1)
 
     msg = f"""
@@ -21,7 +21,7 @@ Horarios en CST (Hora Estándar Central)
     # filtered competitions
     filtered = filtered_competitions(all, main_leagues_en)
     # create image
-    image = create_image_post(filtered, name=date_post)
+    image = create_image_post(filtered, name=date_post, color_match=(20,78,147), color_broadcast=(0,91,66), color_lines=(229,54,88))
     # post tweet
     create_tweet_with_media(msg, image)
     # delete old image post

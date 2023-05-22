@@ -105,8 +105,8 @@ def create_image_post(content: list,
                       space_between_text = 10, 
                       background = (255,255,255),
                       color_competition = (0, 0, 0),
-                      color_match = (6, 134, 177),
-                      color_broadcast = (0, 60, 31),
+                      color_match = (0, 0, 0),
+                      color_broadcast = (0, 0, 0),
                       color_lines = (0,0,0),
                       width_line = 1):
     
