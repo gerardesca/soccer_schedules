@@ -1,5 +1,6 @@
 from settings import PATH, PATH_COMPETITIONS, PATH_SCHEDULES, FONT
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from utils import create_directory
 from logging_utils import log_message
 import os
 
@@ -174,6 +175,7 @@ def create_image_post(content: list,
     # paste footer image
     image.paste(footer_imagen,(int((image.width - footer_imagen.width) / 2), y))
     image.filter(ImageFilter.SHARPEN)
+    create_directory(PATH_SCHEDULES)
     image_save_path = PATH_SCHEDULES + name + '.png'
     image.save(image_save_path)
     
