@@ -3,9 +3,10 @@ from database_utils import countries_broadcast_en, main_leagues_en
 from utils import get_current_date_by_format
 from twitter_utils import create_tweet_with_media
 from images_utils import create_image_post, delete_image
+from settings import PATH_SCHEDULES
 
 def run():
-    today = get_current_date_by_format(days=-7)
+    date_delete_image = get_current_date_by_format(days=-7)
     date_post = get_current_date_by_format(days=1)
 
     msg = f"""
@@ -25,7 +26,8 @@ Horarios en CST (Hora Estándar Central)
     # post tweet
     create_tweet_with_media(msg, image)
     # delete old image post
-    delete_image(f'./images/{today}.png')
+    delete_image(PATH_SCHEDULES + f'{date_delete_image}.png')
+    
     
 if __name__ == '__main__':
     run()

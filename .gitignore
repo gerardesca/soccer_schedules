@@ -232,5 +232,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# keys twitter
+# keys APIs
 keys.py
+
+# images generated
+/images/schedules/*

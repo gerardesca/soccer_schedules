@@ -1,16 +1,15 @@
+from settings import PATH, PATH_COMPETITIONS, PATH_SCHEDULES, FONT
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from logging_utils import log_message
 import os
 
-PATH='./images/'
-PATH_COMPETITIONS='./images/competitions/'
 
 size_competition_title = 30
 size_match_title = 20
 size_broadcasts_title = 15
-font_competition = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_competition_title)
-font_match = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_match_title)
-font_broadcasts_title = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', size_broadcasts_title)
+font_competition = ImageFont.truetype(FONT, size_competition_title)
+font_match = ImageFont.truetype(FONT, size_match_title)
+font_broadcasts_title = ImageFont.truetype(FONT, size_broadcasts_title)
 
 
 def get_width_px_by_text(text: str, font):
@@ -175,7 +174,7 @@ def create_image_post(content: list,
     # paste footer image
     image.paste(footer_imagen,(int((image.width - footer_imagen.width) / 2), y))
     image.filter(ImageFilter.SHARPEN)
-    image_save_path = PATH + name + '.png'
+    image_save_path = PATH_SCHEDULES + name + '.png'
     image.save(image_save_path)
     
     log_message('INFO', "Image created successfully")
