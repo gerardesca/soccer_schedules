@@ -1,11 +1,12 @@
 import logging
+from settings import MAIN_DIR
 
 # Create a logger with the specified log file name
 logger = logging.getLogger('app_logger')
 logger.setLevel(logging.DEBUG)
 
 # Create a file handler to write log messages to the specified log file
-file_handler = logging.FileHandler('app.log')
+file_handler = logging.FileHandler(MAIN_DIR + '/app.log')
 file_handler.setLevel(logging.DEBUG)
 
 # Create a log message formatter
