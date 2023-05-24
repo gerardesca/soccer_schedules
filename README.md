@@ -13,15 +13,15 @@ Twitter integration: The generated images are automatically posted on Twitter to
 ### Installation
 Clone the repository to your local machine.
 Install the required dependencies by running pip install -r requirements.txt.
-Set up the necessary API credentials for Twitter integration.
-Customize the scraping and filtering logic according to your target website and specific requirements.
+Set up the necessary API credentials in keys_.py.
+Rename keys_.py to keys.py
 
 ### Configuration
 To configure the project, you need to:
 
-Specify the target website URL in the scraping script.
-Customize the filtering logic to extract the desired information.
+Customize the font path in settings.py
 Set up Twitter API credentials in the configuration file to enable posting on Twitter.
+Change the soccer leagues you want and the countries of transmission in the file database_utils.py
 
 ### Contributing
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.
