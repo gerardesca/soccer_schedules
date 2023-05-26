@@ -41,3 +41,15 @@ def create_directory(directory_path):
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
         log_message('INFO', f"Directory {directory_path} created successfully.")
+        
+
+def split_text(text: str, symbol: str = '-') -> str:
+    parts = text.split(symbol)
+    if len(parts) > 1:
+        return parts[1].strip()
+    else:
+        return text
+
+    
+def remove_text_special(text: str, text_remove: str = '/'):
+    return text.replace(text_remove, '')

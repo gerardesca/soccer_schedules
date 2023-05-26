@@ -1,9 +1,11 @@
+from typing import Final
 import os
 
-MAIN_FILE = os.path.abspath(__file__)
-MAIN_DIR = os.path.dirname(MAIN_FILE)
+MAIN_FILE: Final = os.path.abspath(__file__)
+MAIN_DIR: Final = os.path.dirname(MAIN_FILE)
 
-PATH=os.path.join(MAIN_DIR, 'images/')
-PATH_COMPETITIONS=os.path.join(MAIN_DIR, 'images/competitions/')
-PATH_SCHEDULES=os.path.join(MAIN_DIR, 'images/schedules/')
-FONT = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+PATH: Final = os.path.join(MAIN_DIR, 'images/')
+PATH_COMPETITIONS: Final = os.path.join(MAIN_DIR, 'images/competitions/')
+PATH_SCHEDULES: Final = os.path.join(MAIN_DIR, 'images/schedules/')
+PATH_FLAGS: Final = os.path.join(MAIN_DIR, 'images/flags/')
+FONT: Final = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'

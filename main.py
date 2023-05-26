@@ -1,36 +1,36 @@
-from livesoccertv_utils import get_main_matches, filtered_competitions
-from database_utils import countries_broadcast_en, main_leagues_en
+from livesoccertv_utils import get_main_matches
+from database_utils import countries_broadcast_en, COMPETITIONS
 from utils import get_current_date_by_format
-from twitter_utils import create_tweet_with_media
-from telegram_utils import send_image_with_msg
-from images_utils import create_image_post, delete_image
-from settings import PATH_SCHEDULES
+from posts_utils import post
+import time
 
-def run():
-    date_delete_image = get_current_date_by_format(days=-7)
-    date_post = get_current_date_by_format(days=1)
+date_delete_image = get_current_date_by_format(days=-7)
+date_post = get_current_date_by_format(days=1)
 
-    msg = f"""
-    {date_post} | JORNADA FUTBOLERA
+
+def text_post(post: str):
+    return f"""
+    {date_post} | {post}
 Transmisiones disponibles para México y USA
-Horarios en CST (Hora Estándar Central)
+Horarios en CST (Hora CDMX)
 
 #futbol #transmisiones #jornadafutbolera
 """
 
+
+def run():
     # scraping main page
     all = get_main_matches(countries_broadcast_en, date_post)
-    # filtered competitions
-    filtered = filtered_competitions(all, main_leagues_en)
-    # create image
-    image = create_image_post(filtered, name=date_post, color_match=(20,78,147), color_broadcast=(0,91,66), color_lines=(229,54,88))
-    # post tweet
-    create_tweet_with_media(msg, image)
-    # send message to Telegram
-    send_image_with_msg(msg, image)
-    # delete old image post
-    delete_image(PATH_SCHEDULES + f'{date_delete_image}.png')
     
+    # posts
+    post(all, f"Cartelera Europea {date_post}", 'Europa_' + date_post, COMPETITIONS['Europe'], text_post('CARTELERA EUROPEA'))
+    time.sleep(2)
+    post(all, f"Cartelera Norteamericana {date_post}", 'North_America_' + date_post, COMPETITIONS['North_America'], text_post('CARTELERA NORTEAMERICANA'))
+    time.sleep(2)
+    post(all, f"Cartelera Sudamericana {date_post}", 'South_America_' + date_post, COMPETITIONS['South_America'], text_post('CARTELERA SUDAMERICANA'))
+    time.sleep(2)
+    post(all, f"Cartelera Internacional {date_post}", 'International_' + date_post, COMPETITIONS['International'], text_post('CARTELERA INTERNACIONAL'))
     
+
 if __name__ == '__main__':
     run()
