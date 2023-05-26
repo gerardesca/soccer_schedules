@@ -237,3 +237,6 @@ keys.py
 
 # images generated
 /images/schedules/*
+
+# tests
+tests.py

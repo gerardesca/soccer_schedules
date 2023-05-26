@@ -108,6 +108,29 @@ def count_text_height(content: list, space_between_text: int = 0, margin: int = 
     return msg_height
 
 
+def split_list_by_height(lst: list, height_limit: int, title_post: str, space_between_text: int = 10, margin: int = 20):
+    result_lists = []
+    current_list = []
+    
+    # title
+    title_height = get_height_px_by_text(title_post, font_title_post)
+
+    for item in lst:
+        current_list.append(item)
+        current_height = count_text_height(current_list, space_between_text=space_between_text, margin=margin) + title_height  + margin*2
+
+        if current_height > height_limit:
+            current_list.pop()  # Remove the last added item
+            result_lists.append(current_list)
+            current_list = [item]
+
+    result_lists.append(current_list)  # Add the remaining current list
+    
+    log_message('INFO', f"Split list to {len(result_lists)} list(s)")
+
+    return result_lists
+
+
 def create_image_post(content: list,
                       name: str = '',
                       title_post: str = '',
@@ -216,7 +239,7 @@ def create_image_post(content: list,
     image_save_path = PATH_SCHEDULES + name + '.png'
     image.save(image_save_path)
     
-    log_message('INFO', "Image created successfully")
+    log_message('INFO', f"Image created successfully {name} to post: {title_post}")
     
     return image_save_path
 

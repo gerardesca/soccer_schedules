@@ -5,7 +5,7 @@ from posts_utils import post
 import time
 
 date_delete_image = get_current_date_by_format(days=-7)
-date_post = get_current_date_by_format(days=1)
+date_post = get_current_date_by_format(days=3)
 
 
 def text_post(post: str):
