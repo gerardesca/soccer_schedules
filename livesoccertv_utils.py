@@ -83,7 +83,7 @@ def get_main_matches(list_countries_broadcast: list, date: str = get_current_dat
             
             # find elements by each match
             match_title = row.find('a').get_text()
-            time_hour = row.find('span', class_='ftime')
+            time_hour = row.find('span', attrs={'df': 'ftime'})
             url = row.find('a')['href']
             url = URL_BASE + language + url[1:]
             
