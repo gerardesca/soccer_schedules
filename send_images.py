@@ -5,7 +5,7 @@ from settings import PATH_SCHEDULES, text_post
 import time
 
 # get date today
-today = get_current_date_by_format()
+today = get_current_date_by_format(days=1)
 # find images with match date today
 images = find_images_with_suffix(PATH_SCHEDULES, f'{today}.png')
 print(images)
