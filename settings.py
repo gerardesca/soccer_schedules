@@ -11,3 +11,10 @@ PATH_FLAGS: Final = os.path.join(MAIN_DIR, 'images/flags/')
 FONT: Final = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
 
 MAX_HEIGHT_IMAGE = 1500
+
+
+def text_post(post: str):
+    return f"""
+{post} | Hora CDMX
+#futbol #transmisiones #jornadafutbolera
+"""

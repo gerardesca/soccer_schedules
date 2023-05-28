@@ -20,6 +20,11 @@ def get_current_date_by_format(format='%Y-%m-%d', days=0):
     return date_str
 
 
+def dates_to_scraping(number_days: int) -> list:
+    list_dates = [get_current_date_by_format(days=day) for day in range(0, number_days+1)]
+    return list_dates  
+
+
 def convert_time(time, hours, format='%I:%M%p'):
     """ 
         Returns the time according to the given difference hours and the format
@@ -53,3 +58,18 @@ def split_text(text: str, symbol: str = '-') -> str:
     
 def remove_text_special(text: str, text_remove: str = '/'):
     return text.replace(text_remove, '')
+
+
+def find_images_with_suffix(folder_path, suffix):
+    image_paths = []
+
+    # Traverse all files and subdirectories in the folder
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            # Check if the file ends with the specified suffix
+            if file.endswith(suffix):
+                # Get the full path of the file and add it to the list
+                image_path = os.path.join(root, file)
+                image_paths.append(image_path)
+
+    return image_paths
