@@ -22,3 +22,8 @@ def send_image_with_msg(msg: str = '', image_path: str = ''):
         log_message('ERROR', f"Failed to open the file {image_path}")
         log_message('ERROR', f"IOError: {e}")
         return None
+    
+def send_msg(msg: str):
+    end_point = f'https://api.telegram.org/bot{TOKEN_TELEGRAM}/sendMessage?chat_id={CHAT_ID}&text={msg}'
+    send_post_request(end_point, {})
+    log_message('INFO', f"Message sent successfully to Telegram.")
