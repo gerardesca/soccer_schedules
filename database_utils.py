@@ -41,6 +41,7 @@ COMPETITIONS = {
                       ,'CONCACAF Gold Cup'
                       ],
     'International': ['Friendly'
+                      ,'FIFA U-20 World Cup'
                        #,'FIFA World Cup'
                       ]
 }

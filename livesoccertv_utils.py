@@ -90,9 +90,11 @@ def get_main_matches(list_countries_broadcast: list, date: str = get_current_dat
             # create dictionary
             dict_matches_by_competition = {'title':match_title,
                                         'date':date,
-                                        'time_utc-4h': 'TBA' if time_hour is None else time_hour.get_text().strip(),
                                         'time_utc': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4),
-                                        'time_utc-6h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6),
+                                        'time_utc-4h': 'TBA' if time_hour is None else time_hour.get_text().strip(), #EDT New York
+                                        'time_utc-5h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6), #CDT Houston
+                                        'time_utc-6h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6), #CST CDMX
+                                        'time_utc-7h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-7), #PDT Los angeles
                                         'url': url,
                                         'broadcasts': get_broadcasts_by_match(url, list_countries_broadcast)}
             
