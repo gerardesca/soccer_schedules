@@ -19,10 +19,11 @@ COMPETITIONS = {
                ,'France - Coupe de France'
                ,'Netherlands - KNVB Beker'
                ,'Portugal - Taça de Portugal'
-               ,'UEFA Super Cup'
+               ,'Europe - UEFA Super Cup'
                ,'Europe - UEFA Europa Conference League'
                ,'Europe - UEFA Nations League'
-               ,'UEFA Euro'
+               ,'Europe - UEFA Euro'
+               ,'Europe - UEFA Euro Qualifying'
                ],
     'South_America': ['Argentina - Primera División'
                    ,'Brazil - Brasileirão'
@@ -38,7 +39,8 @@ COMPETITIONS = {
                       ,'USA/Canada - Major League Soccer'
                       ,'North America - CONCACAF Champions League'
                       ,'North America - CONCACAF Nations League'
-                      ,'CONCACAF Gold Cup'
+                      ,'North America - CONCACAF Gold Cup'
+                      ,'North America - CONCACAF Gold Cup Qualification'
                       ],
     'International': ['Friendly'
                       ,'FIFA U-20 World Cup'
