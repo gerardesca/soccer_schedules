@@ -53,6 +53,7 @@ def get_main_matches(list_countries_broadcast: list, date: str = get_current_dat
     """
     
     # main url
+    language = '' if language == '' else language + '/'
     url = URL_BASE + language + 'schedules/' + date + '/'
     
     # list will be return
@@ -85,7 +86,7 @@ def get_main_matches(list_countries_broadcast: list, date: str = get_current_dat
             match_title = row.find('a').get_text()
             time_hour = row.find(lambda tag: tag.name == 'span' and tag.get('df') and 'ts' in tag.get('class', []))
             url = row.find('a')['href']
-            url = URL_BASE + language + url[1:]
+            url = URL_BASE + url[1:]
             
             # create dictionary
             dict_matches_by_competition = {'title':match_title,
