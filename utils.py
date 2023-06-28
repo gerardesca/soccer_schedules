@@ -99,4 +99,4 @@ def delete_file(file_path: str):
         else:
             log_message('INFO', f"File at {file_path} does not exist.")
     except OSError as e:
-        log_message('ERROR', f"Error occurred while deleting File at {file_path}: {e}")
+        log_message('WARNING', f"Error occurred while deleting File at {file_path}: {e}")

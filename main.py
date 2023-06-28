@@ -5,21 +5,21 @@ from images_utils import ImageV1
 from utils import dates_to_scraping
 
 
-def v1_by_continent():
-    
-    # get today and tomorrow dates
-    dates = dates_to_scraping(1)
-    language = 'en'
+# get today and tomorrow dates
+dates = dates_to_scraping(1)
+language = 'es'
+database = ConnectionDB()
+countries_broadcasts = database.get_countries_broadcast(language)
+scraper = LiveSoccer(countries_broadcasts, language)
+img = ImageV1(database)
 
-    database = ConnectionDB()
-    countries_broadcasts = database.get_countries_broadcast(language)
+
+def by_continent():
+    
     europe = database.get_competition_by_continent('Europe', language)
     north = database.get_competition_by_continent('North America', language)
     south = database.get_competition_by_continent('South America', language)
     inter = database.get_competition_by_continent('International', language)
-    
-    scraper = LiveSoccer(countries_broadcasts, language)
-    img = ImageV1(database)
     
     for date in dates:
         data = scraper.get_all_main_matches(date)
@@ -32,8 +32,19 @@ def v1_by_continent():
         img.create_images_by_max_height(data_north, f'Norteamerica_{language}_{date}', f'CARTELERA NORTEAMERICANA {date}', MAX_HEIGHT_IMAGE)
         img.create_images_by_max_height(data_inter, f'Internacional_{language}_{date}', f'CARTELERA INTERNACIONAL {date}', MAX_HEIGHT_IMAGE)
     
-    database.close()
+    
+def all_competitions():
 
+    competitions = database.get_competitions(language)
+    
+    for date in dates:
+        data = scraper.get_all_main_matches(date)
+        data_competitions = get_matches_by_competition(data, competitions)
+        img.create_images_by_max_height(data_competitions, f'All_{language}_{date}', f'CARTELERA FUTBOLERA {date}', MAX_HEIGHT_IMAGE)
+    
 
 if __name__ == '__main__':
-    v1_by_continent()
+    by_continent()
+    #all_competitions()
+    
+    database.close()

@@ -12,13 +12,13 @@ Image generation: The project generates visually appealing images containing the
 ### Installation
 Clone the repository to your local machine.
 Install the required dependencies by running pip install -r requirements.txt.
+run the file init.py by command python3 init.py
 
 ### Configuration
 To configure the project, you need to:
 
-Customize the font path in settings.py
-Set up Twitter API credentials in the configuration file to enable posting on Twitter.
-Change the soccer leagues you want and the countries of transmission in the file database_utils.py
+You can customize the font path in settings.py
+You can add images of the competitions and broadcasts countries. NOTE: The name of the images must match as in the database or change the name of the image in the variables r_competitions and r_countries in the db.py file
 
 ### Contributing
 Contributions are welcome! If you have any suggestions, feature requests, or bug reports, please open an issue or submit a pull request.

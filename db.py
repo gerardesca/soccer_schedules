@@ -64,6 +64,30 @@ class ConnectionDB:
             print(f"Error: {e}")
             
             
+    def get_competitions(self, lang='en') -> list:
+        
+        query = f"""SELECT name FROM competitions 
+                    WHERE lang = (SELECT id FROM languages WHERE code = '{lang}'
+                    AND active = 1)
+                """
+        
+        try:
+            # Execute the query
+            self.cursor.execute(query)
+
+            # Fetch all the records returned by the query
+            records = self.cursor.fetchall()
+            
+            # Convert the records from tuples to lists
+            records = [row[0] for row in records]
+
+            # Return the query results
+            return records
+        
+        except sqlite3.Error as e:
+            print(f"Error: {e}")
+            
+            
     def get_path_image_flag(self, country: str) -> str:
         query = f'SELECT image_path FROM countries WHERE name = "{country}"'
         
