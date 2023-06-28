@@ -232,11 +232,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# keys APIs
-keys.py
-
 # images generated
 /images/schedules/*
 
 # tests
-tests.py
+/tests
