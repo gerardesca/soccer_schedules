@@ -21,17 +21,3 @@ def make_request(url: str, headers: dict = {}):
         log_message('ERROR', f"HTTP error occurred: {http_error}")
     except requests.exceptions.RequestException as error:
         log_message('ERROR', f"An error occurred: {error}")
-        
-        
-def send_post_request(url: str, data: dict):
-    try:
-        response = requests.post(url, files=data)
-        response.raise_for_status()
-        
-        if response.status_code == 200:
-            log_message('INFO', f"Successful POST requests. Status code: {response.status_code}")
-        else:
-            log_message('ERROR', f"POST requests failed with Status code: {response.status_code}")
-    
-    except requests.exceptions.RequestException as e:
-        log_message('ERROR', f"An error occurred while sending the POST request: {str(e)}")

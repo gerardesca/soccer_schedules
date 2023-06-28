@@ -232,8 +232,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# images generated
-/images/schedules/*
+# images
+/images/*
 
 # tests
-/tests
+/tests/*

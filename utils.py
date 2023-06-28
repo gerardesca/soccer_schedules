@@ -20,7 +20,15 @@ def get_current_date_by_format(format='%Y-%m-%d', days=0):
     return date_str
 
 
-def dates_to_scraping(number_days: int) -> list:
+def dates_to_scraping(number_days: int = 1) -> list:
+    """
+    Returns a dates list given a number of days.
+    Example, if given zero, return today date. If given 1, return today and tomorrow.
+    Then, the given number is the number of dates from today
+    
+    Args:
+        number_days (int): number of dates from today
+    """
     list_dates = [get_current_date_by_format(days=day) for day in range(0, number_days+1)]
     return list_dates  
 
@@ -73,3 +81,22 @@ def find_images_with_suffix(folder_path, suffix):
                 image_paths.append(image_path)
 
     return image_paths
+
+
+def delete_file(file_path: str):
+    
+    #Deletes an file given its file path.
+
+    #Args:
+    #    file_path (str): The file path to be deleted.
+
+    try:
+        # Check if the file exists
+        if os.path.exists(file_path):
+            # Delete the file
+            os.remove(file_path)
+            log_message('INFO', f"File at {file_path} deleted successfully.")
+        else:
+            log_message('INFO', f"File at {file_path} does not exist.")
+    except OSError as e:
+        log_message('ERROR', f"Error occurred while deleting File at {file_path}: {e}")
