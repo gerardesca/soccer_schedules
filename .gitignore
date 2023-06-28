@@ -233,7 +233,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # images
-/images/*
+images/*
 
 # tests
 /tests/*
