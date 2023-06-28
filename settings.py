@@ -16,4 +16,4 @@ IMG_COMPETITIONS_PATH: Final = os.path.join(MAIN_DIR, 'images/competitions/')
 IMG_SCHEDULES_PATH: Final = os.path.join(MAIN_DIR, 'images/schedules/')
 IMG_FLAGS_PATH: Final = os.path.join(MAIN_DIR, 'images/flags/')
 FONT: Final = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
-MAX_HEIGHT_IMAGE = 2000
+MAX_HEIGHT_IMAGE = 1700
