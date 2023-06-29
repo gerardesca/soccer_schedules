@@ -8,6 +8,7 @@ MAIN_DIR: Final = os.path.dirname(MAIN_FILE)
 
 # database
 NAME_DB = 'soccer_schedules.db'
+PATH_DB: Final = os.path.join(MAIN_DIR, NAME_DB)
 
 
 # images

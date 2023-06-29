@@ -1,11 +1,11 @@
-from settings import IMG_FLAGS_PATH, IMG_COMPETITIONS_PATH, NAME_DB
+from settings import IMG_FLAGS_PATH, IMG_COMPETITIONS_PATH, PATH_DB
 from logging_utils import log_message
 import sqlite3
 
 
 class ConnectionDB:
     
-    def __init__(self, database_file: str = NAME_DB) -> None:
+    def __init__(self, database_file: str = PATH_DB) -> None:
         
         try:
             # Connect to the SQLite database
@@ -138,8 +138,8 @@ class ConnectionDB:
 def db_init():
 
     # database
-    conn = sqlite3.connect(NAME_DB)
-    log_message('INFO', f"Database {NAME_DB} created successfully.")
+    conn = sqlite3.connect(PATH_DB)
+    log_message('INFO', f"Database {PATH_DB} created successfully.")
     cursor = conn.cursor()
     
     # delete tables if exists
