@@ -42,7 +42,7 @@ def convert_time(time, hours, format='%I:%M%p'):
     return dt_result.strftime(format)
 
 
-def create_directory(directory_path):
+def create_directory(directory_path) -> None:
     """
     If directory doesnt exist, create directory
     
@@ -64,11 +64,15 @@ def split_text(text: str, symbol: str = '-') -> str:
         return text
 
     
-def remove_text_special(text: str, text_remove: str = '/'):
+def remove_text_special(text: str, text_remove: str = '/') -> str:
     return text.replace(text_remove, '')
 
 
-def find_images_with_suffix(folder_path, suffix):
+def find_images_with_suffix(folder_path, suffix) -> list:
+    """
+    Find file with suffix given
+    """
+    
     image_paths = []
 
     # Traverse all files and subdirectories in the folder
@@ -84,11 +88,12 @@ def find_images_with_suffix(folder_path, suffix):
 
 
 def delete_file(file_path: str):
-    
-    #Deletes an file given its file path.
+    """
+    Delete an file given its file path.
 
-    #Args:
-    #    file_path (str): The file path to be deleted.
+    Args:
+        file_path (str): The file path to be deleted.
+    """
 
     try:
         # Check if the file exists

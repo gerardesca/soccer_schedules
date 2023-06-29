@@ -1,5 +1,5 @@
-import logging
 from settings import MAIN_DIR
+import logging
 
 # Create a logger with the specified log file name
 logger = logging.getLogger('app_logger')

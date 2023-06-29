@@ -237,3 +237,6 @@ images/*
 
 # tests
 /tests/*
+
+# keys
+keys.py

@@ -1,4 +1,4 @@
-from settings import IMG_MAIN_PATH, IMG_COMPETITIONS_PATH, IMG_FLAGS_PATH, IMG_SCHEDULES_PATH, FONT, MAX_HEIGHT_IMAGE
+from settings import IMG_MAIN_PATH, IMG_SCHEDULES_PATH, FONT, MAX_HEIGHT_IMAGE
 from utils import create_directory, split_text, remove_text_special
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from logging_utils import log_message
