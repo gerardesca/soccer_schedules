@@ -7,8 +7,7 @@ from utils import dates_to_scraping
 """VARIABLES"""
 
 # get today and tomorrow dates
-#dates = dates_to_scraping(1)
-dates = ['2023-05-06']
+dates = dates_to_scraping(1)
 # choose language Spanish
 language = 'es'
 # create db connection
