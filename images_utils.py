@@ -1,5 +1,5 @@
 from settings import IMG_MAIN_PATH, IMG_SCHEDULES_PATH, FONT, MAX_HEIGHT_IMAGE
-from utils import create_directory, split_text, remove_text_special
+from utils import create_directory, split_text, remove_text_special, convert_time
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from logging_utils import log_message
 
@@ -67,7 +67,7 @@ class ImageV1:
             # title matches
             for matche in compe['matches']:
                 # get string title match
-                title = f"{matche['title']} | {matche['time_utc-6h']} CST"
+                title = f"{matche['title']} | {convert_time(matche['time_server'], 'America/Mexico_City')}"
                 
                 # get width title match in px
                 width = get_width_px_by_text(title, self.font_title_match)
@@ -118,7 +118,7 @@ class ImageV1:
             
             for matche in compe['matches']:
                 # get string title match
-                title = f"{matche['title']} | {matche['time_utc-6h']} CST"
+                title = f"{matche['title']} | {convert_time(matche['time_server'], 'America/Mexico_City')}"
                 
                 # get height title match in px
                 msg_height += get_height_px_by_text(title, self.font_title_match) + self.space_between_text
@@ -193,7 +193,7 @@ class ImageV1:
 
             for matche in compe['matches']:
                 # get string title match
-                title_match = f"{matche['title']} | {matche['time_utc-6h']} CST"
+                title_match = f"{matche['title']} | {convert_time(matche['time_server'], 'America/Mexico_City')}"
                 
                 # write matches
                 draw.text((x, y), title_match, fill=self.color_match, font=self.font_title_match)

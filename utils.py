@@ -1,6 +1,9 @@
+from settings import TIMEZONE_SERVER_LIVESOCCERTV, LANGUAGE
+from babel.dates import get_timezone_location
 from datetime import datetime, timedelta
-from dateutil.parser import parse
 from logging_utils import log_message
+from dateutil.parser import parse
+import pytz
 import os
 
 
@@ -33,13 +36,41 @@ def dates_to_scraping(number_days: int = 1) -> list:
     return list_dates  
 
 
-def convert_time(time, hours, format='%I:%M%p'):
+def convert_time(time: str, time_zone: str, format: str = '%I:%M%p', language: str = LANGUAGE):
     """ 
-        Returns the time according to the given difference hours and the format
+        Returns the time according to the given timezone and format
     """
+    
+    lang = 'en' if language == '' else language
+    
+    if time is None:
+        return 'TBA'
+    
+    # parse time
     hora_datetime = parse(time)
-    dt_result = hora_datetime + timedelta(hours=hours)
-    return dt_result.strftime(format)
+    
+    # timezone New York from server
+    ny_tz = pytz.timezone(TIMEZONE_SERVER_LIVESOCCERTV)
+
+    # desired timezone
+    desired_tz = pytz.timezone(time_zone)
+
+    # convert time to New York timezone
+    ny_time = ny_tz.localize(hora_datetime)
+
+    # convert time to desired timezone
+    desired_time = ny_time.astimezone(desired_tz)
+    
+    # get timezone name
+    time_zone_name = desired_time.strftime('%Z')
+    
+    # get city name
+    city_name = get_timezone_location(time_zone, locale=lang, return_city=True)
+
+    # format time
+    formatted_time = desired_time.strftime(format)
+
+    return f"{formatted_time} {time_zone_name} {city_name}"
 
 
 def create_directory(directory_path) -> None:

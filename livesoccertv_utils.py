@@ -1,13 +1,14 @@
+from utils import get_current_date_by_format
 from requests_utils import make_request
 from logging_utils import log_message
-from utils import convert_time, get_current_date_by_format
 from bs4 import BeautifulSoup
+from settings import LANGUAGE
 import time
 
 
 class LiveSoccer:
     
-    def __init__(self, countries_broadcast: list, language: str = 'en') -> None:
+    def __init__(self, countries_broadcast: list, language: str = LANGUAGE) -> None:
         self.BASE_URL = 'https://www.livesoccertv.com/'
         self.HEADER = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36"}
         self.countries_broadcast = countries_broadcast
@@ -67,11 +68,7 @@ class LiveSoccer:
                 dict_matches_by_competition = {'title':match_title,
                                             'logos':links_img,
                                             'date':date,
-                                            'time_utc': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4),
-                                            'time_utc-4h': 'TBA' if time_hour is None else time_hour.get_text().strip(), #EDT New York
-                                            'time_utc-5h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6), #CDT Houston
-                                            'time_utc-6h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-6), #CST CDMX
-                                            'time_utc-7h': 'TBA' if time_hour is None else convert_time(time_hour.get_text().strip(), 4-7), #PDT Los angeles
+                                            'time_server': None if time_hour is None else time_hour.get_text().strip(), #EDT New York
                                             'url': url,
                                             'broadcasts': broadcasts}
                 

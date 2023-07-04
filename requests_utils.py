@@ -2,7 +2,7 @@ from logging_utils import log_message
 import requests
 
 
-def make_request(url: str, headers: dict = {}):
+def make_request(url: str, headers: dict = {}, img_url: bool = False):
     """Sends a HTTP GET request to the specified URL.
 
     Args:
@@ -16,6 +16,8 @@ def make_request(url: str, headers: dict = {}):
         response.raise_for_status()
         if response.status_code == 200:
             log_message('INFO', f"Successful requests to: {url} Status code: {response.status_code}")
+            if img_url:
+                return response.content
             return response.text
     except requests.exceptions.HTTPError as http_error:
         log_message('ERROR', f"HTTP error occurred: {http_error}")

@@ -1,4 +1,4 @@
-from settings import IMG_FLAGS_PATH, IMG_COMPETITIONS_PATH, PATH_DB
+from settings import IMG_FLAGS_PATH, IMG_COMPETITIONS_PATH, PATH_DB, LANGUAGE
 from logging_utils import log_message
 import sqlite3
 
@@ -18,7 +18,7 @@ class ConnectionDB:
             log_message('INFO', f"Error connecting to the database: {database_file}")
             
 
-    def get_countries_broadcast(self, lang='en') -> list:
+    def get_countries_broadcast(self, lang=LANGUAGE) -> list:
         
         query = f'SELECT name FROM countries WHERE lang = (SELECT id FROM languages WHERE code = "{lang}")'
         
@@ -39,7 +39,7 @@ class ConnectionDB:
             print(f"Error: {e}")
     
     
-    def get_competition_by_continent(self, continent, lang='en') -> list:
+    def get_competition_by_continent(self, continent, lang=LANGUAGE) -> list:
         
         query = f"""SELECT name FROM competitions 
                     WHERE lang = (SELECT id FROM languages WHERE code = '{lang}'
@@ -64,7 +64,7 @@ class ConnectionDB:
             print(f"Error: {e}")
             
             
-    def get_competitions(self, lang='en') -> list:
+    def get_competitions(self, lang=LANGUAGE) -> list:
         
         query = f"""SELECT name FROM competitions 
                     WHERE lang = (SELECT id FROM languages WHERE code = '{lang}'
@@ -228,7 +228,8 @@ def db_init():
                 ('North America - CONCACAF Gold Cup Qualification', 'North America', 'en', f'{IMG_COMPETITIONS_PATH}North America - CONCACAF Gold Cup Qualification.png'),
                 ('Friendly', 'International', 'en', f'{IMG_COMPETITIONS_PATH}Friendly.png'),
                 ('FIFA U-20 World Cup', 'International', 'en', f'{IMG_COMPETITIONS_PATH}FIFA U-20 World Cup.png'),
-                ('South America - Copa Sudamericana', 'South America', 'en', f'{IMG_COMPETITIONS_PATH}South America - Copa Sudamericana'),
+                ('South America - Copa Sudamericana', 'South America', 'en', f'{IMG_COMPETITIONS_PATH}South America - Copa Sudamericana.png'),
+                ("FIFA Women's World Cup", 'International', 'en', f"{IMG_COMPETITIONS_PATH}FIFA Women's World Cup.png"),
                 # ---------------------------------------------------------------------------------------------------------------------------#
                 ('Inglaterra - Premier League', 'Europe', 'es', f'{IMG_COMPETITIONS_PATH}England - Premier League.png'),
                 ('España - La Liga', 'Europe', 'es', f'{IMG_COMPETITIONS_PATH}Spain - La Liga.png'),
@@ -267,7 +268,9 @@ def db_init():
                 ('Norteamérica - CONCACAF Gold Cup Qualification', 'North America', 'es', f'{IMG_COMPETITIONS_PATH}North America - CONCACAF Gold Cup Qualification.png'),
                 ('Amistoso', 'International', 'es', f'{IMG_COMPETITIONS_PATH}Friendly.png'),
                 ('Copa Mundial Sub-20 de la FIFA', 'International', 'es', f'{IMG_COMPETITIONS_PATH}FIFA U-20 World Cup.png'),
-                ('Sudamérica - Copa Sudamericana', 'South America', 'es', f'{IMG_COMPETITIONS_PATH}South America - Copa Sudamericana'),]
+                ('Sudamérica - Copa Sudamericana', 'South America', 'es', f'{IMG_COMPETITIONS_PATH}South America - Copa Sudamericana.png'),
+                ("Mundial Femenil de la FIFA", 'International', 'es', f"{IMG_COMPETITIONS_PATH}FIFA Women's World Cup.png"),
+                ("Brasil - Serie B", 'South America', 'es', f"{IMG_COMPETITIONS_PATH}Brasil - Serie B.png")]
 
 
     cursor.executemany("INSERT INTO languages (name, code) VALUES (?, ?)", r_languages)
