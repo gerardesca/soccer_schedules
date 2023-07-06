@@ -65,9 +65,9 @@ class LiveSoccer:
                 links_img, broadcasts = self._get_broadcasts_and_imgs_by_match(url)
                 
                 # create dictionary
-                dict_matches_by_competition = {'title':match_title,
-                                            'logos':links_img,
-                                            'date':date,
+                dict_matches_by_competition = {'title': match_title,
+                                            'logos': links_img,
+                                            'date': date,
                                             'time_server': None if time_hour is None else time_hour.get_text().strip(), #EDT New York
                                             'url': url,
                                             'broadcasts': broadcasts}

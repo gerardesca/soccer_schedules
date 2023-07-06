@@ -269,8 +269,7 @@ def db_init():
                 ('Amistoso', 'International', 'es', f'{IMG_COMPETITIONS_PATH}Friendly.png'),
                 ('Copa Mundial Sub-20 de la FIFA', 'International', 'es', f'{IMG_COMPETITIONS_PATH}FIFA U-20 World Cup.png'),
                 ('Sudamérica - Copa Sudamericana', 'South America', 'es', f'{IMG_COMPETITIONS_PATH}South America - Copa Sudamericana.png'),
-                ("Mundial Femenil de la FIFA", 'International', 'es', f"{IMG_COMPETITIONS_PATH}FIFA Women's World Cup.png"),
-                ("Brasil - Serie B", 'South America', 'es', f"{IMG_COMPETITIONS_PATH}Brasil - Serie B.png")]
+                ("Mundial Femenil de la FIFA", 'International', 'es', f"{IMG_COMPETITIONS_PATH}FIFA Women's World Cup.png")]
 
 
     cursor.executemany("INSERT INTO languages (name, code) VALUES (?, ?)", r_languages)

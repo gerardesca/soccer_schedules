@@ -41,8 +41,6 @@ def convert_time(time: str, time_zone: str, format: str = '%I:%M%p', language: s
         Returns the time according to the given timezone and format
     """
     
-    lang = 'en' if language == '' else language
-    
     if time is None:
         return 'TBA'
     
@@ -65,7 +63,7 @@ def convert_time(time: str, time_zone: str, format: str = '%I:%M%p', language: s
     time_zone_name = desired_time.strftime('%Z')
     
     # get city name
-    city_name = get_timezone_location(time_zone, locale=lang, return_city=True)
+    city_name = get_timezone_location(time_zone, locale=language, return_city=True)
 
     # format time
     formatted_time = desired_time.strftime(format)
@@ -93,10 +91,6 @@ def split_text(text: str, symbol: str = '-') -> str:
         return parts[1].strip()
     else:
         return text
-
-    
-def remove_text_special(text: str, text_remove: str = '/') -> str:
-    return text.replace(text_remove, '')
 
 
 def find_images_with_suffix(folder_path, suffix) -> list:

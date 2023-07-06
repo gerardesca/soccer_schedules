@@ -1,5 +1,5 @@
-from settings import IMG_MAIN_PATH, IMG_SCHEDULES_PATH, FONT, MAX_HEIGHT_IMAGE
-from utils import create_directory, split_text, remove_text_special, convert_time
+from settings import IMG_MAIN_PATH, IMG_SCHEDULES_PATH, FONT_DEFAULT, MAX_HEIGHT_IMAGE
+from utils import create_directory, split_text, convert_time
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from logging_utils import log_message
 
@@ -35,10 +35,10 @@ class ImageV1:
         self.size_title_competition = 30
         self.size_title_match = 23
         self.size_title_broadcasts = 17
-        self.font_title = ImageFont.truetype(FONT, self.size_title_post)
-        self.font_title_competition = ImageFont.truetype(FONT, self.size_title_competition)
-        self.font_title_match = ImageFont.truetype(FONT, self.size_title_match)
-        self.font_title_broadcasts = ImageFont.truetype(FONT, self.size_title_broadcasts)
+        self.font_title = ImageFont.truetype(FONT_DEFAULT, self.size_title_post)
+        self.font_title_competition = ImageFont.truetype(FONT_DEFAULT, self.size_title_competition)
+        self.font_title_match = ImageFont.truetype(FONT_DEFAULT, self.size_title_match)
+        self.font_title_broadcasts = ImageFont.truetype(FONT_DEFAULT, self.size_title_broadcasts)
         
         # connection to db
         self.database = database
