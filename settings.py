@@ -24,7 +24,7 @@ FONT_DEFAULT: Final = os.path.join(FONTS_PATH, 'DejaVuSans-Bold.ttf')
 MAX_HEIGHT_IMAGE = 1700
 
 # (width, height)
-SIZE_LOGOS_TEAMS = (60,60)
+SIZE_LOGOS_TEAMS = (50,50)
 
 # you can add or remove timezones: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 TIMEZONES_FOR_IMAGE = ['America/Mexico_City'
