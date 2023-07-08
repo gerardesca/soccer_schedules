@@ -50,6 +50,6 @@ Follow the [Twitter account](https://twitter.com/Data_Baall) where the images ar
 ![South America](examples/1_South_America_2023-05-06.png)
 
 ### Images generated without images in the competitions and flags folders.
-![Europe](examples/1_Europe_es_2023-05-06_.png)
+![Europe](examples/1_Europe_2023-05-06.png)
 ![North America](examples/3_North_America_2023-05-06_.png)
 ![South America](examples/1_South_America_2023-05-06_.png)
