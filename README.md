@@ -35,6 +35,8 @@ To configure the project, you need to:
  - The images of the competitions must be uploaded in the *images/competitions* folder.
  - The images of the countries must be uploaded in the *images/flags* folder.
  - If you change any of the records in the db.py file you must run the init.py script again.
+ - You can add the time zones you want in the settings file in the *TIMEZONES_FOR_IMAGE* variable
+ - You can choose the language: Spanish or English for the generation of images in the settings file in the *LANGUAGE* variable
 
 # Production
 You can join the [Telegram Group](https://t.me/data_ball) where the broadcasts of the main soccer leagues are published.
@@ -43,9 +45,11 @@ Follow the [Twitter account](https://twitter.com/Data_Baall) where the images ar
 # Results
 
 ### Images generated with images in the competitions and flags folders.
-![Europe](examples/1_Europe_es_2023-05-06_db.png)
-![North America](examples/1_North_America_es_2023-05-06_db.png)
+![Europe](examples/1_Europe_2023-05-06.png)
+![North America](examples/3_North_America_2023-05-06.png)
+![South America](examples/1_South_America_2023-05-06.png)
 
 ### Images generated without images in the competitions and flags folders.
-![Europe](examples/1_Europe_es_2023-05-06.png)
-![North America](examples/1_North_America_es_2023-05-06.png)
+![Europe](examples/1_Europe_es_2023-05-06_.png)
+![North America](examples/3_North_America_2023-05-06_.png)
+![South America](examples/1_South_America_2023-05-06_.png)
